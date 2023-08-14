@@ -1,42 +1,35 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Report System</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    
-      <div class=" collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav ms-auto ">
-          <li class="nav-item">
-            <a class="nav-link mx-2 active" aria-current="page" href="{{ route('home.index') }}">Home</a>
-          </li>
-          @auth
-          <li class="nav-item">
-            <a class="nav-link mx-2" href="{{ route('report_customer_type.index') }}">Report</a>
-          </li>
-          @role('Developer')
-          <li class="nav-item">
-            <a class="nav-link mx-2" href="{{ route('users.index') }}">Users</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link mx-2" href="{{ route('roles.index') }}">Roles</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link mx-2" href="{{ route('permissions.index') }}">Permissions</a>
-          </li>
-          @endrole
-          @endauth
-        </ul>
-      </div>
+<header class="p-3 bg-dark text-white">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+      </a>
 
-      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-        <ul class="navbar-nav ml-auto">
-          @auth
-          <li class="nav-item">
-            <a class="nav-link mx-2" href="{{ route('logout.perform') }}">Logout</a>
-          </li>
-          @endauth
-        </ul>
-      </div>
-    </div>  
-    </nav>
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="{{ route('home.index') }}" class="nav-link px-2 text-white">Home</a></li>
+        @auth
+          <li><a href="{{ route('report_customer_type.index') }}" class="nav-link px-2 text-white">Report</a></li>
+          @role('Developer')
+          <li><a href="{{ route('users.index') }}" class="nav-link px-2 text-white">User</a></li>
+          <li><a href="{{ route('roles.index') }}" class="nav-link px-2 text-white">Role</a></li>
+          <li><a href="{{ route('permissions.index') }}" class="nav-link px-2 text-white">Permission</a></li>
+          @endrole
+        @endauth
+      </ul>
+
+      @auth
+        {{auth()->user()->name}}&nbsp;
+        <div class="text-end">
+          <a href="{{ route('logout.perform') }}" class="btn btn-outline-light me-2">Logout</a>
+        </div>
+      @endauth
+
+      @guest
+        <div class="text-end">
+          <a href="{{ route('login.perform') }}" class="btn btn-outline-light me-2">Login</a>
+          <a href="{{ route('register.perform') }}" class="btn btn-warning">Sign-up</a>
+        </div>
+      @endguest
+    </div>
+  </div>
+</header>

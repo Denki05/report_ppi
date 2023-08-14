@@ -21,9 +21,9 @@ class ReportCustomerTypeController extends Controller
     public function index()
     {
         $report = ReportCustomerType::get();
-        $factory = DB::table('tbl_factory')->get();
+        $customer_type = DB::table('tbl_customer')->select('customer_type')->distinct()->get();
 
-        return view('report_customer_type.index', compact('report', 'factory'));
+        return view('report_customer_type.index', compact('report', 'customer_type'));
     }
 
     /**
