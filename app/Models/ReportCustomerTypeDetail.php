@@ -17,10 +17,13 @@ class ReportCustomerTypeDetail extends Model
         'customer_type', 
         'customer_text_kota', 
         'invoice_code', 
+        'invoice_brand', 
         'invoice_date', 
         'invoice_subtotal', 
         'invoice_disc_amount', 
         'invoice_disc_amount2', 
+        'invoice_product', 
+        'packaging_name', 
         'invoice_qty'
     ];
 }

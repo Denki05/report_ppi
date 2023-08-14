@@ -12,8 +12,7 @@ class ReportCustomerType extends Model
     protected $table = 'report_type';
 
     protected $fillable = [
-        'code',
         'start_date',
-        'end_date'
+        'end_date',
     ];
 }

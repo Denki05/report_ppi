@@ -14,33 +14,29 @@
           <li class="nav-item">
             <a class="nav-link mx-2" href="{{ route('report_customer_type.index') }}">Report</a>
           </li>
-          <!-- <li class="nav-item dropdown">
-            <a class="nav-link mx-2 dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Report
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="{{ route('report_customer_type.index') }}">Customer Type</a></li>
-              <li><a class="dropdown-item" href="{{ route('report.index') }}">Brand Product</a></li>
-              <li><a class="dropdown-item" href="#">Supplier</a></li>
-            </ul>
-          </li> -->
-          @endauth
-          <li class="nav-item dropdown">
-            <a class="nav-link mx-2 dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {{auth()->user()->name}}&nbsp;
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              @auth
-                @role('Developer')
-                  <li><a href="{{ route('users.index') }}" class="dropdown-item">Users</a></li>
-                  <li><a href="{{ route('roles.index') }}" class="dropdown-item">Roles</a></li>
-                  <li><a href="{{ route('permissions.index') }}" class="dropdown-item">Permissions</a></li>
-                @endrole
-                <a href="{{ route('logout.perform') }}" class="dropdown-item"> Logout</a>
-              @endauth
-            </ul>
+          @role('Developer')
+          <li class="nav-item">
+            <a class="nav-link mx-2" href="{{ route('users.index') }}">Users</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2" href="{{ route('roles.index') }}">Roles</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2" href="{{ route('permissions.index') }}">Permissions</a>
+          </li>
+          @endrole
+          @endauth
         </ul>
       </div>
-    </div>
+
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          @auth
+          <li class="nav-item">
+            <a class="nav-link mx-2" href="{{ route('logout.perform') }}">Logout</a>
+          </li>
+          @endauth
+        </ul>
+      </div>
+    </div>  
     </nav>
