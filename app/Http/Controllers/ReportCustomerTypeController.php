@@ -121,9 +121,9 @@ class ReportCustomerTypeController extends Controller
 
     public function reportCustomerType(Request $request)
     {
-        $reportData = ReportCustomerType::get();
+        $reportData = ReportCustomerTypeDetail::first();
 
-        if(!empty($reportData)){
+        if(empty($reportData)){
             return redirect()->route('report_customer_type.index')
             ->withSuccess(__('No data posted.'));
         }else{
@@ -131,8 +131,8 @@ class ReportCustomerTypeController extends Controller
             $my_pdf = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\customer_type\\export\\customer_type.pdf";
 
             //- Variables - Server Information 
-            $my_server = "PPI-REPORT"; 
-            $my_user = "ppi_report"; 
+            $my_server = "IT-SERVER"; 
+            $my_user = "dev_denki"; 
             $my_password = "Denki@05121996"; 
             $my_database = "ppi";
             $COM_Object = "CrystalDesignRunTime.Application";

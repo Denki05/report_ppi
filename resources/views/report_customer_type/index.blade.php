@@ -48,84 +48,83 @@
             <button type="submit" class="btn btn-success" id="btnPost">Post</button>
         </form>
         <hr>
-
-        <!-- <div class="row">
-            <div class="col">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Customer Type</h5>
-                        <p class="card-text"></p>
-                        <a href="{{ route('report_customer_type.reportCustomerType') }}" class="btn btn-primary">Generate</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card" >
-                    <div class="card-body">
-                        <h5 class="card-title">Supplier</h5>
-                        <div class="container">
-                            <div class="row">
-                                <select class="form-control">
-                                    <option>Pilih Factory</option>
-                                </select>
-                            </div>
-                        </div>
-                        <br>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card" >
-                    <div class="card-body">
-                        <h5 class="card-title">Packaging</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
         <div class="block">
             <div class="block-content block-content-full">
-                <form>
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <select class="form-control" name="typeReport" id="typeReport">
-                                    <option value="">Pilih report type</option>
-                                    <option value="1">Customer type</option>
-                                    <option value="2">Packaging</option>
-                                    <option value="3">Supplier</option>
-                                </select>
-                            </div>   
-                        </div>
-                        <div class="col-lg-3">
-                            <button type="submit" class="btn btn-success" id="btnPost">Generate</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-3" id="customerType">
-                            <select class="form-control js-select2" name="customerType" style="display: none;">
-                                <option value="">Pilih type customer</option>
-                                @foreach($customer_type as $key)
-                                <option value="{{$key->customer_type}}">{{$key->customer_type}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-lg-3" id="packaging">
-                            
-                        </div>
-                        <div class="col-lg-3" id="supplier">
-                            
+                <div class="row">
+                    <div class="col-xl-3 col-sm-6 col-12"> 
+                        <div class="card">
+                            <form action="{{ route('report_customer_type.reportCustomerType') }}" method="get">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="media d-flex">
+                                            <div class="media-body text-right">
+                                                <h4>#Customer Type</h4>
+                                                <button type="submit" class="btn btn-success" id="btnPost">GO</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                </form>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="media-body text-right">
+                                            <h3>156</h3>
+                                            <span>New Comments</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="align-self-center">
+                                <i class="icon-graph success font-large-2 float-left"></i>
+                                </div>
+                                <div class="media-body text-right">
+                                <h3>64.89 %</h3>
+                                <span>Bounce Rate</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="align-self-center">
+                                <i class="icon-pointer danger font-large-2 float-left"></i>
+                                </div>
+                                <div class="media-body text-right">
+                                <h3>423</h3>
+                                <span>Total Visits</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 @endsection
 
 @push('scripts')
-
+<script type="text/javascript">
+    $(document).ready(function(){
+        
+    });
+</script>
 @endpush
