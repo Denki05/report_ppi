@@ -12,18 +12,11 @@ class ReportCustomerTypeDetail extends Model
     protected $table = 'report_type_detail';
 
     protected $fillable = [
-        'customer_report_type_id',
-        'customer_name',
-        'customer_type', 
-        'customer_text_kota', 
-        'invoice_code', 
-        'invoice_brand', 
-        'invoice_date', 
-        'invoice_subtotal', 
-        'invoice_disc_amount', 
-        'invoice_disc_amount2', 
-        'invoice_product', 
-        'packaging_name', 
-        'invoice_qty'
+        'report_type_detail_id',
+        'product_name',
+        'product_brand', 
+        'product_qty', 
+        'pakaging_name', 
+        'factory_name',
     ];
 }

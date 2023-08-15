@@ -12,7 +12,14 @@ class ReportCustomerType extends Model
     protected $table = 'report_type';
 
     protected $fillable = [
-        'start_date',
-        'end_date',
+        'customer_name',
+        'customer_city',
+        'customer_type', 
+        'invoice_code', 
+        'invoice_brand', 
+        'invoice_date', 
+        'invoice_subtotal', 
+        'invoice_disc_amount', 
+        'invoice_disc_amount2', 
     ];
 }

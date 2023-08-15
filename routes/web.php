@@ -78,8 +78,10 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
         Route::group(['prefix' => 'report_customer_type'], function() {
             Route::get('/', 'ReportCustomerTypeController@index')->name('report_customer_type.index');
             Route::post('/store', 'ReportCustomerTypeController@store')->name('report_customer_type.store');
-            Route::delete('/{id}/delete', 'ReportCustomerTypeController@destroy')->name('report_customer_type.destroy');
+            Route::delete('/delete', 'ReportCustomerTypeController@destroy')->name('report_customer_type.destroy');
             Route::get('/reportCustomerType', 'ReportCustomerTypeController@reportCustomerType')->name('report_customer_type.reportCustomerType');
+            Route::get('/reportBySupplier', 'ReportCustomerTypeController@reportBySupplier')->name('report_customer_type.reportBySupplier');
+            Route::get('/reportByBrand', 'ReportCustomerTypeController@reportByBrand')->name('report_customer_type.reportByBrand');
         });
 
         Route::resource('roles', RolesController::class);
