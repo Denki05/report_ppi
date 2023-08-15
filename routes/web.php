@@ -82,6 +82,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
             Route::get('/reportCustomerType', 'ReportCustomerTypeController@reportCustomerType')->name('report_customer_type.reportCustomerType');
             Route::get('/reportBySupplier', 'ReportCustomerTypeController@reportBySupplier')->name('report_customer_type.reportBySupplier');
             Route::get('/reportByBrand', 'ReportCustomerTypeController@reportByBrand')->name('report_customer_type.reportByBrand');
+            Route::get('/reportByPackaging', 'ReportCustomerTypeController@reportByPackaging')->name('report_customer_type.reportByPackaging');
         });
 
         Route::resource('roles', RolesController::class);

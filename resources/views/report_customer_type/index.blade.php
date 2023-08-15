@@ -98,9 +98,9 @@
                                                 <div class="row">
                                                     <div class="col-8">
                                                         <select class="form-select" aria-label="Pilih supplier" name="factory_name">
-                                                            <option selected>Pilih supplier</option>
+                                                            <option selected>Pilih Supplier</option>
                                                             @foreach($factory as $key)
-                                                            <option value="{{$key->id}}">{{$key->factory_name}}</option>
+                                                            <option value="{{$key->factory_name}}">{{$key->factory_name}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -117,7 +117,7 @@
                     </div>
                     <div class="col-xl-3 col-sm-6 col-12">
                         <div class="card">
-                            <form action="#" method="get">
+                            <form action="{{ route('report_customer_type.reportByPackaging') }}" method="get">
                                 <div class="card-content">
                                     <div class="card-body">
                                         <div class="media d-flex">
@@ -125,17 +125,10 @@
                                                 <h5>#Packaging</h5>
                                                 <div class="row">
                                                     <div class="col-8">
-                                                        <select class="form-select" aria-label="Pilih Packaging" name="factory_name">
-                                                            <option selected>Pilih Packaging</option>
-                                                            @foreach($factory as $key)
-                                                            <option value="{{$key->id}}">{{$key->factory_name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <br>
-                                                        <select class="form-select" aria-label="Pilih supplier" name="factory_name">
-                                                            <option selected>Pilih Product</option>
-                                                            @foreach($factory as $key)
-                                                            <option value="{{$key->id}}">{{$key->factory_name}}</option>
+                                                        <select class="form-select" name="product_name">
+                                                            <option value="">Pilih Product</option>
+                                                            @foreach($product as $row)
+                                                            <option value="{{$row->product_name}}">{{$row->product_name}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -156,10 +149,12 @@
     </div>
 @endsection
 
+@include('asset.plugin.select2')
+
 @push('scripts')
 <script type="text/javascript">
     $(document).ready(function(){
-        
+        $('.js-select2').select2();
     });
 </script>
 @endpush

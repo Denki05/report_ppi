@@ -21,9 +21,11 @@ class ReportCustomerTypeController extends Controller
     public function index()
     {
         $report = ReportCustomerType::get();
+        $product = DB::table('tbl_product')->get();
+        $pack = DB::table('tbl_packaging')->get();
         $factory = DB::table('tbl_factory')->get();
 
-        return view('report_customer_type.index', compact('report', 'factory'));
+        return view('report_customer_type.index', compact('report', 'factory', 'product', 'pack'));
     }
 
     /**
@@ -185,7 +187,7 @@ class ReportCustomerTypeController extends Controller
     public function reportBySupplier(Request $request)
     {
         $factory = $request->factory_name;
-        $get_factory = DB::table('tbl_factory')->where('id', $factory)->first();
+        $get_factory = DB::table('tbl_factory')->where('factory_name', $factory)->first();
         $reportData = ReportCustomerTypeDetail::first();
 
         if(empty($reportData)){
@@ -211,7 +213,7 @@ class ReportCustomerTypeController extends Controller
 
             //- field prompt or else report will hang - to get through
             $creport->EnableParameterPrompting = FALSE;
-            $creport->RecordSelectionFormula = "{report_type_detail.invoice_product_factory_id}= $get_factory->id";
+            $creport->RecordSelectionFormula = "{report_type_detail.factory_name}= '$get_factory->factory_name'";
 
             //export to PDF process
             $creport->ExportOptions->DiskFileName=$my_pdf; //export to pdf
@@ -279,6 +281,65 @@ class ReportCustomerTypeController extends Controller
             $ObjectFactory = null;
     
             $file = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\brand\\export\\brand.pdf";
+
+            header("Content-Description: File Transfer"); 
+            header("Content-Type: application/octet-stream"); 
+            header("Content-Transfer-Encoding: Binary"); 
+            header("Content-Disposition: attachment; filename=\"". basename($file) ."\""); 
+            ob_clean();
+            flush();
+            readfile ($file);
+            exit();
+        }
+    }
+
+    public function reportByPackaging(Request $request)
+    {
+        $reportData = DB::table('report_type')->leftJoin('report_type_detail', 'report_type.id', '=', 'report_type_detail.report_type_detail_id')->first();
+
+        $product = $request->product_name;
+
+        $get_product = DB::table('tbl_product')->where('product_name', $product)->first();
+        // dd($get_packaging);
+
+        if(empty($reportData)){
+            return redirect()->route('report_customer_type.index')
+            ->withSuccess(__('No data posted.'));
+        }else{
+            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\packaging\\packaging.rpt"; 
+            $my_pdf = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\packaging\\export\\packaging.pdf";
+
+            //- Variables - Server Information 
+            $my_server = "IT-SERVER"; 
+            $my_user = "dev_denki"; 
+            $my_password = "Denki@05121996"; 
+            $my_database = "ppi";
+            $COM_Object = "CrystalDesignRunTime.Application";
+
+            //-Create new COM object-depends on your Crystal Report version
+            $crapp= New COM($COM_Object) or die("Unable to Create Object");
+            $creport = $crapp->OpenReport($my_report,1); // call rpt report
+
+            //- Set database logon info - must have
+            $creport->Database->Tables(1)->SetLogOnInfo($my_server, $my_database, $my_user, $my_password);
+
+            //- field prompt or else report will hang - to get through
+            $creport->EnableParameterPrompting = FALSE;
+            $creport->RecordSelectionFormula = "{report_type_detail.product_name}= '$get_product->product_name'";
+
+            //export to PDF process
+            $creport->ExportOptions->DiskFileName=$my_pdf; //export to pdf
+            $creport->ExportOptions->PDFExportAllPages=true;
+            $creport->ExportOptions->DestinationType=1; // export to file
+            $creport->ExportOptions->FormatType=31; // PDF type
+            $creport->Export(false);
+
+            //------ Release the variables ------
+            $creport = null;
+            $crapp = null;
+            $ObjectFactory = null;
+    
+            $file = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\packaging\\export\\packaging.pdf";
 
             header("Content-Description: File Transfer"); 
             header("Content-Type: application/octet-stream"); 
