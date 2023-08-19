@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use DB;
 
 class LogoutController extends Controller
 {
@@ -15,6 +16,10 @@ class LogoutController extends Controller
      */
     public function perform()
     {
+
+        DB::table('report_type')->truncate();
+        DB::table('report_type_detail')->truncate();
+
         Session::flush();
         
         Auth::logout();
