@@ -54,7 +54,7 @@ class ReportCustomerTypeController extends Controller
                 'tbl_sales_invoice.invoice_code', 
                 'tbl_sales_invoice.invoice_date', 
                 'tbl_sales_invoice.invoice_product_type', 
-                DB::Raw('tbl_sales_invoice.invoice_subtotal - tbl_sales_invoice.invoice_disc_amount - tbl_sales_invoice.invoice_disc_amount2 as invoice_subtotal'), 
+                'tbl_sales_invoice.invoice_subtotal', 
                 'tbl_customer.customer_store_name', 
                 'tbl_customer.customer_type', 
                 'tbl_customer.customer_city',
