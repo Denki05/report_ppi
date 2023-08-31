@@ -131,20 +131,12 @@ class ReportCustomerTypeController extends Controller
 
     public function reportCustomerType(Request $request)
     {
-        $reportData = DB::table('report_type')->leftJoin('report_type_detail', 'report_type.id', '=', 'report_type_detail.report_type_detail_id')->first();
-
-        // dd($reportData);
-
-        if(empty($reportData)){
-            return redirect()->route('report_customer_type.index')
-            ->withSuccess(__('No data posted.'));
-        }else{
-            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\customer_type\\customer_type.rpt"; 
+        $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\customer_type\\customer_type.rpt"; 
             $my_pdf = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\customer_type\\export\\customer_type.pdf";
 
             //- Variables - Server Information 
-            $my_server = "IT-SERVER"; 
-            $my_user = "dev_denki"; 
+            $my_server = "PPI-REPORT"; 
+            $my_user = "ppi_report"; 
             $my_password = "Denki@05121996"; 
             $my_database = "ppi";
             $COM_Object = "CrystalDesignRunTime.Application";
@@ -181,7 +173,15 @@ class ReportCustomerTypeController extends Controller
             flush();
             readfile ($file);
             exit();
-        }
+        // $reportData = DB::table('report_type')->leftJoin('report_type_detail', 'report_type.id', '=', 'report_type_detail.report_type_detail_id')->first();
+
+        // dd($reportData);
+        // if(empty($reportData)){
+        //     return redirect()->route('report_customer_type.index')
+        //     ->withSuccess(__('No data posted.'));
+        // }else{
+            
+        // }
     }
 
     public function reportBySupplier(Request $request)
@@ -190,53 +190,60 @@ class ReportCustomerTypeController extends Controller
         $get_factory = DB::table('tbl_factory')->where('factory_name', $factory)->first();
         $reportData = ReportCustomerTypeDetail::first();
 
-        if(empty($reportData)){
-            return redirect()->route('report_customer_type.index')
-            ->withSuccess(__('No data posted.'));
-        }else{
-            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\supplier\\supplier.rpt"; 
-            $my_pdf = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\supplier\\export\\supplier.pdf";
+        try {
 
-            //- Variables - Server Information 
-            $my_server = "IT-SERVER"; 
-            $my_user = "dev_denki"; 
-            $my_password = "Denki@05121996"; 
-            $my_database = "ppi";
-            $COM_Object = "CrystalDesignRunTime.Application";
-
-            //-Create new COM object-depends on your Crystal Report version
-            $crapp= New COM($COM_Object) or die("Unable to Create Object");
-            $creport = $crapp->OpenReport($my_report,1); // call rpt report
-
-            //- Set database logon info - must have
-            $creport->Database->Tables(1)->SetLogOnInfo($my_server, $my_database, $my_user, $my_password);
-
-            //- field prompt or else report will hang - to get through
-            $creport->EnableParameterPrompting = FALSE;
-            $creport->RecordSelectionFormula = "{report_type_detail.factory_name}= '$get_factory->factory_name'";
-
-            //export to PDF process
-            $creport->ExportOptions->DiskFileName=$my_pdf; //export to pdf
-            $creport->ExportOptions->PDFExportAllPages=true;
-            $creport->ExportOptions->DestinationType=1; // export to file
-            $creport->ExportOptions->FormatType=31; // PDF type
-            $creport->Export(false);
-
-            //------ Release the variables ------
-            $creport = null;
-            $crapp = null;
-            $ObjectFactory = null;
+            if(empty($reportData)){
+                return redirect()->route('report_customer_type.index')
+                ->withSuccess(__('No data posted.'));
+            }else{
+                $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\supplier\\supplier.rpt"; 
+                $my_pdf = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\supplier\\export\\supplier.pdf";
     
-            $file = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\supplier\\export\\supplier.pdf";
-
-            header("Content-Description: File Transfer"); 
-            header("Content-Type: application/octet-stream"); 
-            header("Content-Transfer-Encoding: Binary"); 
-            header("Content-Disposition: attachment; filename=\"". basename($file) ."\""); 
-            ob_clean();
-            flush();
-            readfile ($file);
-            exit();
+                //- Variables - Server Information 
+                $my_server = "PPI-REPORT"; 
+                $my_user = "ppi_report"; 
+                $my_password = "Denki@05121996"; 
+                $my_database = "ppi";
+                $COM_Object = "CrystalDesignRunTime.Application";
+    
+                //-Create new COM object-depends on your Crystal Report version
+                $crapp= New COM($COM_Object) or die("Unable to Create Object");
+                $creport = $crapp->OpenReport($my_report,1); // call rpt report
+    
+                //- Set database logon info - must have
+                $creport->Database->Tables(1)->SetLogOnInfo($my_server, $my_database, $my_user, $my_password);
+    
+                //- field prompt or else report will hang - to get through
+                $creport->EnableParameterPrompting = FALSE;
+                $creport->RecordSelectionFormula = "{report_type_detail.factory_name}= '$get_factory->factory_name'";
+    
+                //export to PDF process
+                $creport->ExportOptions->DiskFileName=$my_pdf; //export to pdf
+                $creport->ExportOptions->PDFExportAllPages=true;
+                $creport->ExportOptions->DestinationType=1; // export to file
+                $creport->ExportOptions->FormatType=31; // PDF type
+                $creport->Export(false);
+    
+                //------ Release the variables ------
+                $creport = null;
+                $crapp = null;
+                $ObjectFactory = null;
+        
+                $file = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\supplier\\export\\supplier.pdf";
+    
+                header("Content-Description: File Transfer"); 
+                header("Content-Type: application/octet-stream"); 
+                header("Content-Transfer-Encoding: Binary"); 
+                header("Content-Disposition: attachment; filename=\"". basename($file) ."\""); 
+                ob_clean();
+                flush();
+                readfile ($file);
+                exit();
+            }
+          
+        } catch (\Exception $e) {
+          
+            return $e->getMessage();
         }
     }
 
@@ -244,52 +251,58 @@ class ReportCustomerTypeController extends Controller
     {
         $reportData = DB::table('report_type')->leftJoin('report_type_detail', 'report_type.id', '=', 'report_type_detail.report_type_detail_id')->first();
 
-        if(empty($reportData)){
-            return redirect()->route('report_customer_type.index')
-            ->withSuccess(__('No data posted.'));
-        }else{
-            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\brand\\brand.rpt"; 
-            $my_pdf = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\brand\\export\\brand.pdf";
+        try{
 
-            //- Variables - Server Information 
-            $my_server = "IT-SERVER"; 
-            $my_user = "dev_denki"; 
-            $my_password = "Denki@05121996"; 
-            $my_database = "ppi";
-            $COM_Object = "CrystalDesignRunTime.Application";
-
-            //-Create new COM object-depends on your Crystal Report version
-            $crapp= New COM($COM_Object) or die("Unable to Create Object");
-            $creport = $crapp->OpenReport($my_report,1); // call rpt report
-
-            //- Set database logon info - must have
-            $creport->Database->Tables(1)->SetLogOnInfo($my_server, $my_database, $my_user, $my_password);
-
-            //- field prompt or else report will hang - to get through
-            $creport->EnableParameterPrompting = FALSE;
-
-            //export to PDF process
-            $creport->ExportOptions->DiskFileName=$my_pdf; //export to pdf
-            $creport->ExportOptions->PDFExportAllPages=true;
-            $creport->ExportOptions->DestinationType=1; // export to file
-            $creport->ExportOptions->FormatType=31; // PDF type
-            $creport->Export(false);
-
-            //------ Release the variables ------
-            $creport = null;
-            $crapp = null;
-            $ObjectFactory = null;
+            if(empty($reportData)){
+                return redirect()->route('report_customer_type.index')
+                ->withSuccess(__('No data posted.'));
+            }else{
+                $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\brand\\brand.rpt"; 
+                $my_pdf = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\brand\\export\\brand.pdf";
     
-            $file = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\brand\\export\\brand.pdf";
+                //- Variables - Server Information 
+                $my_server = "PPI-REPORT"; 
+                $my_user = "ppi_report"; 
+                $my_password = "Denki@05121996"; 
+                $my_database = "ppi";
+                $COM_Object = "CrystalDesignRunTime.Application";
+    
+                //-Create new COM object-depends on your Crystal Report version
+                $crapp= New COM($COM_Object) or die("Unable to Create Object");
+                $creport = $crapp->OpenReport($my_report,1); // call rpt report
+    
+                //- Set database logon info - must have
+                $creport->Database->Tables(1)->SetLogOnInfo($my_server, $my_database, $my_user, $my_password);
+    
+                //- field prompt or else report will hang - to get through
+                $creport->EnableParameterPrompting = FALSE;
+    
+                //export to PDF process
+                $creport->ExportOptions->DiskFileName=$my_pdf; //export to pdf
+                $creport->ExportOptions->PDFExportAllPages=true;
+                $creport->ExportOptions->DestinationType=1; // export to file
+                $creport->ExportOptions->FormatType=31; // PDF type
+                $creport->Export(false);
+    
+                //------ Release the variables ------
+                $creport = null;
+                $crapp = null;
+                $ObjectFactory = null;
+        
+                $file = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\brand\\export\\brand.pdf";
+    
+                header("Content-Description: File Transfer"); 
+                header("Content-Type: application/octet-stream"); 
+                header("Content-Transfer-Encoding: Binary"); 
+                header("Content-Disposition: attachment; filename=\"". basename($file) ."\""); 
+                ob_clean();
+                flush();
+                readfile ($file);
+                exit();
+            }
 
-            header("Content-Description: File Transfer"); 
-            header("Content-Type: application/octet-stream"); 
-            header("Content-Transfer-Encoding: Binary"); 
-            header("Content-Disposition: attachment; filename=\"". basename($file) ."\""); 
-            ob_clean();
-            flush();
-            readfile ($file);
-            exit();
+        } catch (\Exception $e) {
+            return $e->getMessage();
         }
     }
 
@@ -310,8 +323,8 @@ class ReportCustomerTypeController extends Controller
             $my_pdf = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\packaging\\export\\packaging.pdf";
 
             //- Variables - Server Information 
-            $my_server = "IT-SERVER"; 
-            $my_user = "dev_denki"; 
+            $my_server = "PPI-REPORT"; 
+            $my_user = "ppi_report"; 
             $my_password = "Denki@05121996"; 
             $my_database = "ppi";
             $COM_Object = "CrystalDesignRunTime.Application";
