@@ -134,7 +134,7 @@
                     </div>
                     <div class="col-xl-3 col-sm-6 col-12">
                         <div class="card">
-                            <form action="{{ route('report_customer_type.reportByPackaging') }}" method="get">
+                            <form action="{{ route('report_customer_type.reportByPackaging') }}" method="GET">
                                 <div class="card-content">
                                     <div class="card-body">
                                         <div class="media d-flex">
