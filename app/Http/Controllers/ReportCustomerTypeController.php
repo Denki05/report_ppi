@@ -52,9 +52,10 @@ class ReportCustomerTypeController extends Controller
             ->select(
                 'tbl_sales_invoice.id', 
                 'tbl_sales_invoice.invoice_code', 
+                'tbl_sales_invoice.invoice_type', 
                 'tbl_sales_invoice.invoice_date', 
                 'tbl_sales_invoice.invoice_product_type', 
-                DB::Raw('tbl_sales_invoice.invoice_subtotal - tbl_sales_invoice.invoice_disc_amount - tbl_sales_invoice.invoice_disc_amount2 as invoice_subtotal'), 
+                'tbl_sales_invoice.invoice_subtotal',
                 'tbl_customer.customer_store_name', 
                 'tbl_customer.customer_type', 
                 'tbl_customer.customer_city',
@@ -76,6 +77,7 @@ class ReportCustomerTypeController extends Controller
             $create_header->customer_city = $key->customer_city;
             $create_header->customer_type = $key->customer_type;
             $create_header->invoice_code = $key->invoice_code;
+            $create_header->invoice_type = $key->invoice_type;
             $create_header->invoice_brand = $key->invoice_product_type;
             $create_header->invoice_date = $key->invoice_date;
             $create_header->invoice_subtotal = $key->invoice_subtotal;
@@ -131,56 +133,63 @@ class ReportCustomerTypeController extends Controller
 
     public function reportCustomerType(Request $request)
     {
-        $reportData = DB::table('report_type')->leftJoin('report_type_detail', 'report_type.id', '=', 'report_type_detail.report_type_detail_id')->first();
+        $noData = false;
+        $data = DB::table('report_type')
+            ->leftJoin('report_type_detail', 'report_type_detail.report_type_detail_id', '=', 'report_type.id')
+            ->get();
 
-        // dd($reportData);
+        try{
+            if(empty($data)){
+                $noData = true;
+                return redirect()->route('report_customer_type.index')
+                ->withSuccess(__('No data posted!'));
+                
+            }else{
+                    $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\customer_type\\customer_type.rpt"; 
+                    $my_pdf = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\customer_type\\export\\customer_type.pdf";
 
-        if(empty($reportData)){
-            return redirect()->route('report_customer_type.index')
-            ->withSuccess(__('No data posted.'));
-        }else{
-            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\customer_type\\customer_type.rpt"; 
-            $my_pdf = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\customer_type\\export\\customer_type.pdf";
+                    //- Variables - Server Information 
+                    $my_server = "PPI-REPORT"; 
+                    $my_user = "ppi_report"; 
+                    $my_password = "Denki@05121996"; 
+                    $my_database = "ppi";
+                    $COM_Object = "CrystalDesignRunTime.Application";
 
-            //- Variables - Server Information 
-            $my_server = "IT-SERVER"; 
-            $my_user = "dev_denki"; 
-            $my_password = "Denki@05121996"; 
-            $my_database = "ppi";
-            $COM_Object = "CrystalDesignRunTime.Application";
+                    //-Create new COM object-depends on your Crystal Report version
+                    $crapp= New COM($COM_Object) or die("Unable to Create Object");
+                    $creport = $crapp->OpenReport($my_report,1); // call rpt report
 
-            //-Create new COM object-depends on your Crystal Report version
-            $crapp= New COM($COM_Object) or die("Unable to Create Object");
-            $creport = $crapp->OpenReport($my_report,1); // call rpt report
+                    //- Set database logon info - must have
+                    $creport->Database->Tables(1)->SetLogOnInfo($my_server, $my_database, $my_user, $my_password);
 
-            //- Set database logon info - must have
-            $creport->Database->Tables(1)->SetLogOnInfo($my_server, $my_database, $my_user, $my_password);
+                    //- field prompt or else report will hang - to get through
+                    $creport->EnableParameterPrompting = FALSE;
 
-            //- field prompt or else report will hang - to get through
-            $creport->EnableParameterPrompting = FALSE;
+                    //export to PDF process
+                    $creport->ExportOptions->DiskFileName=$my_pdf; //export to pdf
+                    $creport->ExportOptions->PDFExportAllPages=true;
+                    $creport->ExportOptions->DestinationType=1; // export to file
+                    $creport->ExportOptions->FormatType=31; // PDF type
+                    $creport->Export(false);
 
-            //export to PDF process
-            $creport->ExportOptions->DiskFileName=$my_pdf; //export to pdf
-            $creport->ExportOptions->PDFExportAllPages=true;
-            $creport->ExportOptions->DestinationType=1; // export to file
-            $creport->ExportOptions->FormatType=31; // PDF type
-            $creport->Export(false);
+                    //------ Release the variables ------
+                    $creport = null;
+                    $crapp = null;
+                    $ObjectFactory = null;
+            
+                    $file = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\customer_type\\export\\customer_type.pdf";
 
-            //------ Release the variables ------
-            $creport = null;
-            $crapp = null;
-            $ObjectFactory = null;
-    
-            $file = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\customer_type\\export\\customer_type.pdf";
-
-            header("Content-Description: File Transfer"); 
-            header("Content-Type: application/octet-stream"); 
-            header("Content-Transfer-Encoding: Binary"); 
-            header("Content-Disposition: attachment; filename=\"". basename($file) ."\""); 
-            ob_clean();
-            flush();
-            readfile ($file);
-            exit();
+                    header("Content-Description: File Transfer"); 
+                    header("Content-Type: application/octet-stream"); 
+                    header("Content-Transfer-Encoding: Binary"); 
+                    header("Content-Disposition: attachment; filename=\"". basename($file) ."\""); 
+                    ob_clean();
+                    flush();
+                    readfile ($file);
+                    exit();
+            }
+        }catch (\Exception $e) {
+            return $e->getMessage();
         }
     }
 
@@ -198,8 +207,8 @@ class ReportCustomerTypeController extends Controller
             $my_pdf = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\supplier\\export\\supplier.pdf";
 
             //- Variables - Server Information 
-            $my_server = "IT-SERVER"; 
-            $my_user = "dev_denki"; 
+            $my_server = "PPI-REPORT"; 
+            $my_user = "ppi_report"; 
             $my_password = "Denki@05121996"; 
             $my_database = "ppi";
             $COM_Object = "CrystalDesignRunTime.Application";
@@ -252,8 +261,8 @@ class ReportCustomerTypeController extends Controller
             $my_pdf = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\brand\\export\\brand.pdf";
 
             //- Variables - Server Information 
-            $my_server = "IT-SERVER"; 
-            $my_user = "dev_denki"; 
+            $my_server = "PPI-REPORT"; 
+            $my_user = "ppi_report"; 
             $my_password = "Denki@05121996"; 
             $my_database = "ppi";
             $COM_Object = "CrystalDesignRunTime.Application";
@@ -310,8 +319,8 @@ class ReportCustomerTypeController extends Controller
             $my_pdf = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\packaging\\export\\packaging.pdf";
 
             //- Variables - Server Information 
-            $my_server = "IT-SERVER"; 
-            $my_user = "dev_denki"; 
+            $my_server = "PPI-REPORT"; 
+            $my_user = "ppi_report"; 
             $my_password = "Denki@05121996"; 
             $my_database = "ppi";
             $COM_Object = "CrystalDesignRunTime.Application";

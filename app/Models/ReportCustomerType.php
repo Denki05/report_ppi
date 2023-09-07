@@ -16,6 +16,7 @@ class ReportCustomerType extends Model
         'customer_city',
         'customer_type', 
         'invoice_code', 
+        'invoice_type', 
         'invoice_brand', 
         'invoice_date', 
         'invoice_subtotal', 
