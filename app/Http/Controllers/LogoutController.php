@@ -17,10 +17,10 @@ class LogoutController extends Controller
     public function perform()
     {
 
-        DB::table('report_type')->truncate();
-        DB::table('report_type_detail')->truncate();
+        // DB::table('report_type')->truncate();
+        // DB::table('report_type_detail')->truncate();
 
-        Session::flush();
+        // Session::flush();
         
         Auth::logout();
 

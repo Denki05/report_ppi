@@ -288,6 +288,9 @@ class ReportCustomerTypeController extends Controller
                 return redirect()->route('report_customer_type.index')
                 ->withSuccess(__('No data posted.'));
             }else{
+                $start = $request->start_date;
+                $end = $request->end_date;
+
                 $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\brand\\brand.rpt"; 
                 $my_pdf = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\brand\\export\\brand.pdf";
 
@@ -308,6 +311,7 @@ class ReportCustomerTypeController extends Controller
     
                 //- field prompt or else report will hang - to get through
                 $creport->EnableParameterPrompting = FALSE;
+                $creport->RecordSelectionFormula = "{report_type.invoice_date}>=#$start#AND{report_type.invoice_date}<=#$end#";
     
                 //export to PDF process
                 $creport->ExportOptions->DiskFileName=$my_pdf; //export to pdf
