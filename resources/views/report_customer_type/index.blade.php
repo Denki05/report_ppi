@@ -80,7 +80,20 @@
                                         <div class="media d-flex">
                                             <div class="media-body text-right">
                                                 <h5>#Customer Type</h5>
-                                                <button type="submit" class="btn btn-success" id="btnPost">GO</button>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <label>Start</label>
+                                                        <input type="date" class="form-control" name="start_date">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label>End</label>
+                                                        <input type="date" class="form-control" name="end_date">
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <button type="submit" class="btn btn-success" id="btnPost">GO</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

@@ -15,13 +15,13 @@
             @include('layouts.partials.messages')
         </div>
 
-        <table class="table table-striped">
+        <table class="table table-striped" id="datatables">
             <thead>
-            <tr>
-                <th scope="col" width="15%">Name</th>
-                <th scope="col">Guard</th> 
-                <th scope="col" colspan="3" width="1%"></th> 
-            </tr>
+                <tr>
+                    <th scope="col" width="15%">Name</th>
+                    <th scope="col">Guard</th> 
+                    <th scope="col" colspan="3" width="1%"></th> 
+                </tr>
             </thead>
             <tbody>
                 @foreach($permissions as $permission)

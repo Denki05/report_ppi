@@ -10,6 +10,7 @@ use App\Models\SalesOrder;
 use App\Models\SalesOrderDetail;
 use DB;
 use COM;
+use Carbon\Carbon;
 
 class ReportCustomerTypeController extends Controller
 {
@@ -139,6 +140,9 @@ class ReportCustomerTypeController extends Controller
             ->leftJoin('report_type_detail', 'report_type_detail.report_type_detail_id', '=', 'report_type.id')
             ->get();
 
+        $start = $request->start_date;
+        $end = $request->end_date;
+      
         try{
             if(empty($data)){
                 $noData = true;
@@ -150,8 +154,8 @@ class ReportCustomerTypeController extends Controller
                     $my_pdf = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\customer_type\\export\\customer_type.pdf";
 
                     //- Variables - Server Information 
-                    $my_server = "PPI-REPORT"; 
-                    $my_user = "ppi_report"; 
+                    $my_server = "SERVER"; 
+                    $my_user = "dev_denki"; 
                     $my_password = "Denki@05121996"; 
                     $my_database = "ppi";
                     $COM_Object = "CrystalDesignRunTime.Application";
@@ -165,6 +169,7 @@ class ReportCustomerTypeController extends Controller
 
                     //- field prompt or else report will hang - to get through
                     $creport->EnableParameterPrompting = FALSE;
+                    $creport->RecordSelectionFormula = "{report_type.invoice_date}>=#$start#AND{report_type.invoice_date}<=#$end#";
 
                     //export to PDF process
                     $creport->ExportOptions->DiskFileName=$my_pdf; //export to pdf
@@ -227,8 +232,8 @@ class ReportCustomerTypeController extends Controller
 
     
                 //- Variables - Server Information 
-                $my_server = "PPI-REPORT"; 
-                $my_user = "ppi_report"; 
+                $my_server = "SERVER"; 
+                $my_user = "dev_denki"; 
                 $my_password = "Denki@05121996"; 
                 $my_database = "ppi";
                 $COM_Object = "CrystalDesignRunTime.Application";
@@ -288,8 +293,8 @@ class ReportCustomerTypeController extends Controller
 
     
                 //- Variables - Server Information 
-                $my_server = "PPI-REPORT"; 
-                $my_user = "ppi_report"; 
+                $my_server = "SERVER"; 
+                $my_user = "dev_denki"; 
                 $my_password = "Denki@05121996"; 
                 $my_database = "ppi";
                 $COM_Object = "CrystalDesignRunTime.Application";
@@ -350,8 +355,8 @@ class ReportCustomerTypeController extends Controller
             $my_pdf = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\packaging\\export\\packaging.pdf";
 
             //- Variables - Server Information 
-            $my_server = "PPI-REPORT"; 
-            $my_user = "ppi_report"; 
+            $my_server = "SERVER"; 
+            $my_user = "dev_denki"; 
             $my_password = "Denki@05121996"; 
             $my_database = "ppi";
             $COM_Object = "CrystalDesignRunTime.Application";
@@ -366,6 +371,7 @@ class ReportCustomerTypeController extends Controller
             //- field prompt or else report will hang - to get through
             $creport->EnableParameterPrompting = FALSE;
             $creport->RecordSelectionFormula = "{report_type_detail.product_name}= '$get_product->product_name'";
+            // $creport->RecordSelectionFormula = str_replace($rptParam->Name, $cVal, $rpt->RecordSelectionFormula);
 
             //export to PDF process
             $creport->ExportOptions->DiskFileName=$my_pdf; //export to pdf
