@@ -1,1 +1,0 @@
-<p class="mt-5 mb-3 text-muted">Premium Parfume Indonesia &copy; {{date('Y')}}</p>

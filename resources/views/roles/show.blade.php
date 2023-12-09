@@ -1,34 +1,35 @@
-@extends('layouts.app-master')
+@extends('layouts.app')
+
 
 @section('content')
-    <div class="bg-light p-4 rounded">
-        <h1>{{ ucfirst($role->name) }} Role</h1>
-        <div class="lead">
-            
+<div class="row">
+    <div class="col-lg-12 margin-tb">
+        <div class="pull-left">
+            <h2> Show Role</h2>
         </div>
-        
-        <div class="container mt-4">
+        <div class="pull-right">
+            <a class="btn btn-primary" href="{{ route('roles.index') }}"> Back</a>
+        </div>
+    </div>
+</div>
 
-            <h3>Assigned permissions</h3>
 
-            <table class="table table-striped">
-                <thead>
-                    <th scope="col" width="20%">Name</th>
-                    <th scope="col" width="1%">Guard</th> 
-                </thead>
-
-                @foreach($rolePermissions as $permission)
-                    <tr>
-                        <td>{{ $permission->name }}</td>
-                        <td>{{ $permission->guard_name }}</td>
-                    </tr>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Name:</strong>
+            {{ $role->name }}
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Permissions:</strong>
+            @if(!empty($rolePermissions))
+                @foreach($rolePermissions as $v)
+                    <label class="label label-success">{{ $v->name }},</label>
                 @endforeach
-            </table>
+            @endif
         </div>
-
     </div>
-    <div class="mt-4">
-        <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-info">Edit</a>
-        <a href="{{ route('roles.index') }}" class="btn btn-default">Back</a>
-    </div>
+</div>
 @endsection
