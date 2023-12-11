@@ -62,65 +62,25 @@
                       </select>
                     </div>
                   </div>
-                  {{--<div class="mb-3 row">
+                  <div class="mb-3 row">
                     <div class="col-3 col-form-label required">Type Report</div>
                     <div class="col">
                       <label class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="radios-inline" id="best_seller" value="1">
-                        <span class="form-check-label">Best Seller</span>
+                        <input class="form-check-input" type="radio" name="radios-inline" id="principal_summary" value="1">
+                        <span class="form-check-label">SUMMARY</span>
                       </label>
                       <label class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="radios-inline" id="varian" value="2">
-                        <span class="form-check-label">Varian</span>
-                      </label>
-                      <label class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="radios-inline" id="varian_bulan" value="3">
-                        <span class="form-check-label">Varian - Bulan</span>
-                      </label>
-                      <label class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="radios-inline" id="varian_bulan_customer" value="4">
-                        <span class="form-check-label">Varian - Bulan - Customer</span>
+                        <input class="form-check-input" type="radio" name="radios-inline" id="principal_detail" value="2">
+                        <span class="form-check-label">DETAIL</span>
                       </label>
                     </div>
-                  </div>--}}
+                  </div>
                 </div>
               <div class="card-footer text-end">
                   <button type="submit" id="printReport" class="btn btn-success">Print</button>
                   {{--<button type="submit" id="filter" class="btn btn-primary">Search</button>--}}
               </div>
             </form>
-
-              {{--<div class="card">
-                <div class="card-body">
-                  
-                    <table id="datatable" class="table table-striped">
-                      <thead>
-                        <tr>
-                          <td>#</td>
-                          <td>Tgl Nota</td>
-                          <td>No. Nota</td>
-                          <td>Product</td>
-                          <td>Packaging</td>
-                          <td>Customer</td>
-                          <td>Qty</td>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach($model as $row)
-                          <tr>
-                            <th>{{ $loop->iteration }}</th>
-                            <th>{{ date('d-m-Y', strtotime($row->tanggalNota)) }}</th>
-                            <th>{{ $row->nota }}</th>
-                            <th>{{ $row->product }}</th>
-                            <th>{{ $row->packaging }}</th>
-                            <th>{{ $row->customer }}</th>
-                            <th>{{ $row->qty }}</th>
-                          </tr>
-                        @endforeach
-                      </tbody>
-                    </table>
-                </div>
-              </div>--}}
         </div>
     </div>
 
@@ -186,19 +146,23 @@
         }));
       });
 
+      $(document).ajaxSend(function() {
+        $("#overlay").fadeIn(300);　
+      });
+
       $('#printReport').on('click', function(e) {
         e.preventDefault(); // prevent the form submit
         let factory = $('#select_factory').val();
         let start = $('#start_date').val();
         let end = $('#end_date').val();
-        // let typeReport = $("input:radio[name=radios-inline]:checked").val();
+        let typeReport = $("input:radio[name=radios-inline]:checked").val();
         
         $.ajax({
            type:'POST',
            url:"{{ route('principal.print_report_principal') }}",
-           data:{"_token": "{{ csrf_token() }}","factory":factory, "start":start, "end":end},
+           data:{"_token": "{{ csrf_token() }}","factory":factory, "start":start, "end":end, "type":typeReport},
            success:function(response){
-
+            // console.log(response);
            }
         });
       })

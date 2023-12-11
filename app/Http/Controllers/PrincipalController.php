@@ -28,9 +28,15 @@ class PrincipalController extends Controller
         $factory = $request->all()['factory'];
         $start = $request->all()['start'];
         $end = $request->all()['end'];
+        $type = $request->all()['type'];
         $date = date("Y-m");
 
-        $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\principal\\principal_detail.rpt";
+        if($type == 1){
+            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\principal\\principal_summary.rpt";
+        }else{
+            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\principal\\principal_detail.rpt";
+        }
+        
         $my_pdf = 'C:\\xampp\\htdocs\\report_ppi\\public\\report\\principal\\export\\principal-semester-'.$date.'.pdf';
 
         //- Variables - Server Information 
