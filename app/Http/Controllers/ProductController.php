@@ -172,7 +172,7 @@ class ProductController extends Controller
 
     public function product_summary(Request $request)
     {   
-        $product = $request->all()['product'];
+            $product = $request->all()['product'];
             $start = $request->all()['start'];
             $end = $request->all()['end'];
             $type = $request->all()['typeReport'];
@@ -227,8 +227,6 @@ class ProductController extends Controller
             //-Create new COM object-depends on your Crystal Report version
             $crapp= New COM($COM_Object) or die("Unable to Create Object");
             $creport = $crapp->OpenReport($my_report,1); // call rpt report
-
-            // to refresh data before
 
             //- Set database logon info - must have
             $creport->Database->Tables(1)->SetLogOnInfo($my_server, $my_database, $my_user, $my_password);
