@@ -28,4 +28,9 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('/product_summary', 'ProductController@product_summary')->name('product_summary');
     });
     Route::resource('products', 'ProductController');
+
+    Route::group(['as' => 'principal.', 'prefix' => '/principal'], function () {
+        Route::post('/print_report_principal', 'PrincipalController@print_report_principal')->name('print_report_principal');
+    });
+    Route::resource('principal', 'PrincipalController');
 });
