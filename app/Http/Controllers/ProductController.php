@@ -26,11 +26,6 @@ class ProductController extends Controller
          $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:product-delete', ['only' => ['destroy']]);
     }
-
-    // public function json(Request $request, ProductTable $datatable)
-    // {
-    //     return $datatable->build($request);
-    // }
    
     public function index(Request $request)
     {

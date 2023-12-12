@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
 use App\User;
 use Spatie\Permission\Models\Role;
@@ -14,6 +15,14 @@ use Hash;
 
 class UserController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:user-create', ['only' => ['create','store']]);
+         $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -120,6 +129,7 @@ class UserController extends Controller
             $input['password'] = Hash::make($input['password']);
         }else{
             $input = array_except($input,array('password'));    
+            // $input = Arr::except($input,array('password'));
         }
 
 
