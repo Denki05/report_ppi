@@ -198,13 +198,13 @@ class ProductController extends Controller
 
             // CR
             if($type == 1){
-                $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\product\\penjualan_product_summary_short_qty.rpt";
+                $my_report = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\product\\penjualan_product_summary_short_qty.rpt";
             }elseif($type == 2){
-                $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\product\\penjualan_product_summary_short_variant.rpt";
+                $my_report = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\product\\penjualan_product_summary_short_variant.rpt";
             }elseif($type == 3){
-                $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\product\\penjualan_product_summary.rpt";
+                $my_report = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\product\\penjualan_product_summary.rpt";
             }elseif($type == 4){
-                $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\product\\penjualan_product_detail.rpt";
+                $my_report = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\product\\penjualan_product_detail.rpt";
             }
 
 
