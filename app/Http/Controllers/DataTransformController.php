@@ -10,6 +10,6 @@ class DataTransformController extends Controller
 {
     public function index(Request $request)
     {
-        return view('data_transform.index');
+        return view('comming_soon');
     }
 }

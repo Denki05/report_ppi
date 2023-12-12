@@ -67,11 +67,11 @@
                     <div class="col">
                       <label class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="radios-inline" id="principal_summary" value="1">
-                        <span class="form-check-label">SUMMARY</span>
+                        <span class="form-check-label">Summary</span>
                       </label>
                       <label class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="radios-inline" id="principal_detail" value="2">
-                        <span class="form-check-label">DETAIL</span>
+                        <span class="form-check-label">Detail</span>
                       </label>
                     </div>
                   </div>

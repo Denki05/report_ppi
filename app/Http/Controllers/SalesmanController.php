@@ -11,6 +11,6 @@ class SalesmanController extends Controller
 
     public function index(Request $request)
     {
-        return view('salesman.index');
+        return view('comming_soon');
     }
 }
