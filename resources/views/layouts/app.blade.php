@@ -216,7 +216,7 @@
                             <div class="dropdown-menu">
                                 <div class="dropdown-menu-columns">
                                     <div class="dropdown-menu-column">
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" href="{{ route('data_transform.index') }}">
                                             Register Brand
                                         </a>
                                     </div>

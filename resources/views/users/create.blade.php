@@ -40,14 +40,20 @@
                         <div class="col-12">
                             <div class="card-body">
                                 <div class="row row-cards">
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <div class="mb-3">
                                             <label class="form-label">Name</label>
                                             <!-- <input type="text" class="form-control" placeholder="Name"> -->
                                             {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
                                         </div>
                                     </div>
-                                    <div class="col-sm-6 col-md-6">
+                                    <div class="col-sm-6 col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Username</label>
+                                            {!! Form::text('username', null, array('placeholder' => 'Username','class' => 'form-control')) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label">Email</label>
                                             {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}

@@ -2,40 +2,53 @@
 
 
 @section('content')
-<div class="row">
-    <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
-            <h2> Show User</h2>
-        </div>
-        <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
-        </div>
-    </div>
-</div>
 
+    <div class="page-wrapper">
+        <!-- Page header -->
+        <div class="page-header d-print-none">
+          <div class="container-xl">
+            <div class="row g-2 align-items-center">
+              <div class="col">
+                <h2 class="page-title">
+                    Show Account
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Page body -->
+        <div class="page-body">
+          <div class="container-xl">
+            <div class="card">
+                <div class="row g-0">
+                    <div class="col d-flex flex-column">
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md">
+                                    <div class="form-label">Name</div>
+                                    <input type="text" class="form-control" value="{{ $user->name }}" disabled>
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-label">Email</div>
+                                    <input type="text" class="form-control" value="{{ $user->email }}" disabled>
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-label">Roles</div>
+                                    @if(!empty($user->getRoleNames()))
+                                        @foreach($user->getRoleNames() as $v)
+                                            <span class="badge bg-azure">{{ $v }}</span>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>  
+                        </div>
+                        <div class="card-footer text-end">
+                            <a class="btn btn-ghost-info" href="{{ route('users.index') }}" role="button">Link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Name:</strong>
-            {{ $user->name }}
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Email:</strong>
-            {{ $user->email }}
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Roles:</strong>
-            @if(!empty($user->getRoleNames()))
-                @foreach($user->getRoleNames() as $v)
-                    <label class="badge badge-success">{{ $v }}</label>
-                @endforeach
-            @endif
-        </div>
-    </div>
-</div>
 @endsection
