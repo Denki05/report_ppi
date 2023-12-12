@@ -53,11 +53,11 @@ class CustomerController extends Controller
             }
 
         if($type == 1){
-            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\customer\\customer_order_summary.rpt";
+            $my_report = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\customer\\customer_order_summary.rpt";
         }elseif($type == 2){
-            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\customer\\customer_order_detail_variant_month.rpt";
+            $my_report = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\customer\\customer_order_detail_variant_month.rpt";
         }elseif($type == 3){
-            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\customer\\customer_order_detail.rpt";
+            $my_report = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\customer\\customer_order_detail.rpt";
         }
 
         $my_pdf = 'C:\\xampp\\htdocs\\report_ppi\\public\\report\\customer\\export\\customer-report-order-'.$date.'.pdf';
