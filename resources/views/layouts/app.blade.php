@@ -73,11 +73,41 @@
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            {{--<a href="#" class="dropdown-item">Status</a>
-                            <a href="./profile.html" class="dropdown-item">Profile</a>
-                            <a href="#" class="dropdown-item">Feedback</a>
+                            @role('developer')
+                                <a href="{{ route('users.index') }}" class="dropdown-item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M5 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                        <path d="M3 21v-2a4 4 0 0 1 4 -4h4c.96 0 1.84 .338 2.53 .901" />
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                        <path d="M16 19h6" />
+                                        <path d="M19 16v6" />
+                                    </svg>
+                                    &nbsp;
+                                    &nbsp;
+                                    <span class="nav-link-title">
+                                        Account
+                                    </span>
+                                </a>
+                                <a href="{{ route('roles.index') }}" class="dropdown-item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-report" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M8 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5.697" />
+                                        <path d="M18 14v4h4" />
+                                        <path d="M18 11v-4a2 2 0 0 0 -2 -2h-2" />
+                                        <path d="M8 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                                        <path d="M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                                        <path d="M8 11h4" />
+                                        <path d="M8 15h3" />
+                                    </svg>
+                                    &nbsp;
+                                    &nbsp;
+                                    <span class="nav-link-title">
+                                        Roles
+                                    </span>
+                                </a>
                             <div class="dropdown-divider"></div>
-                            <a href="./settings.html" class="dropdown-item">Settings</a>--}}
+                            @endrole
                             <a href="{{ route('logout') }}" class="dropdown-item"  
                                 onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
@@ -160,73 +190,39 @@
                                 </span>
                             </a>
                         </li>
-                        @role('developer')
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('users.index') }}" >
-                                <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M5 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                                    <path d="M3 21v-2a4 4 0 0 1 4 -4h4c.96 0 1.84 .338 2.53 .901" />
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                                    <path d="M16 19h6" />
-                                    <path d="M19 16v6" />
-                                </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    Account
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('roles.index') }}" >
-                                <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-report" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M8 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5.697" />
-                                    <path d="M18 14v4h4" />
-                                    <path d="M18 11v-4a2 2 0 0 0 -2 -2h-2" />
-                                    <path d="M8 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                    <path d="M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-                                    <path d="M8 11h4" />
-                                    <path d="M8 15h3" />
-                                </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    Roles
-                                </span>
-                            </a>
-                        </li>
-                        @endrole
-                        {{--<li class="nav-item dropdown">
+                        
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                                 <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/package -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-bank" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M3 21l18 0" />
-                                        <path d="M3 10l18 0" />
-                                        <path d="M5 6l7 -3l7 3" />
-                                        <path d="M4 10l0 11" />
-                                        <path d="M20 10l0 11" />
-                                        <path d="M8 14l0 3" />
-                                        <path d="M12 14l0 3" />
-                                        <path d="M16 14l0 3" />
-                                    </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-database-cog" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M4 6c0 1.657 3.582 3 8 3s8 -1.343 8 -3s-3.582 -3 -8 -3s-8 1.343 -8 3" />
+                                    <path d="M4 6v6c0 1.657 3.582 3 8 3c.21 0 .42 -.003 .626 -.01" />
+                                    <path d="M20 11.5v-5.5" />
+                                    <path d="M4 12v6c0 1.657 3.582 3 8 3" />
+                                    <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                    <path d="M19.001 15.5v1.5" />
+                                    <path d="M19.001 21v1.5" />
+                                    <path d="M22.032 17.25l-1.299 .75" />
+                                    <path d="M17.27 20l-1.3 .75" />
+                                    <path d="M15.97 17.25l1.3 .75" />
+                                    <path d="M20.733 20l1.3 .75" />
+                                </svg>
                                 </span>
                                 <span class="nav-link-title">
-                                    Customer
+                                    Data Transform
                                 </span>
                             </a>
                             <div class="dropdown-menu">
                                 <div class="dropdown-menu-columns">
                                     <div class="dropdown-menu-column">
-                                        <a class="dropdown-item" href="{{ route('products.index') }}">
-                                            Report By Type
+                                        <a class="dropdown-item" href="#">
+                                            Register Brand
                                         </a>
                                     </div>
                                 </div>
                             </div>
-                        </li>--}}
+                        </li>
                     </ul>
                     </div>
                 </div>
