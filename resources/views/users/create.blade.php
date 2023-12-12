@@ -98,7 +98,7 @@
   </div>
 </div>
 
-<script src="{{ asset('dist/libs/tom-select/dist/js/tom-select.base.min.js?1684106062') }}" defer></script>
+<script src="{{ asset('public/dist/libs/tom-select/dist/js/tom-select.base.min.js?1684106062') }}" defer></script>
 
 <script>
     // @formatter:off

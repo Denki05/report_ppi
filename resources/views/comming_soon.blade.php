@@ -5,7 +5,7 @@
     <div class="page page-center">
       <div class="container-tight py-4">
         <div class="empty">
-          <div class="empty-img"><img src="{{ asset('image/comming_soon.svg') }}" height="128" alt="">
+          <div class="empty-img"><img src="{{ asset('public/image/comming_soon.svg') }}" height="128" alt="">
           </div>
           <p class="empty-title">Comming Soon Page!</p>
           <p class="empty-subtitle text-muted">

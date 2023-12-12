@@ -84,9 +84,9 @@
         </div>
     </div>
 
-    <script src="{{ asset('dist/libs/litepicker/dist/litepicker.js?1684106062') }}" defer></script>
-    <script src="{{ asset('dist/libs/tom-select/dist/js/tom-select.base.min.js?1684106062') }}" defer></script>
-    <script src="{{ asset('dist/libs/list.js/dist/list.min.js?1684106062') }}" defer></script>
+    <script src="{{ asset('public/dist/libs/litepicker/dist/litepicker.js?1684106062') }}" defer></script>
+    <script src="{{ asset('public/dist/libs/tom-select/dist/js/tom-select.base.min.js?1684106062') }}" defer></script>
+    <script src="{{ asset('public/dist/libs/list.js/dist/list.min.js?1684106062') }}" defer></script>
 
     <!-- datatable -->
     

@@ -11,9 +11,9 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('dist/js/demo.min.js?1684106062') }}" defer></script>
-    <script src="{{ asset('dist/js/tabler.min.js?1684106062') }}" defer></script>
+    <script src="{{ asset('public/js/app.js') }}" defer></script>
+    <script src="{{ asset('public/dist/js/demo.min.js?1684106062') }}" defer></script>
+    <script src="{{ asset('public/dist/js/tabler.min.js?1684106062') }}" defer></script>
 
 
     <!-- Fonts -->
@@ -21,12 +21,12 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('dist/css/tabler.min.css?1684106062') }}" rel="stylesheet">
-    <link href="{{ asset('dist/css/tabler-flags.min.css?1684106062') }}" rel="stylesheet">
-    <link href="{{ asset('dist/css/tabler-payments.min.css?1684106062') }}" rel="stylesheet">
-    <link href="{{ asset('dist/css/tabler-vendors.min.css?1684106062') }}" rel="stylesheet">
-    <link href="{{ asset('dist/css/demo.min.css?1684106062') }}" rel="stylesheet">
+    <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/dist/css/tabler.min.css?1684106062') }}" rel="stylesheet">
+    <link href="{{ asset('public/dist/css/tabler-flags.min.css?1684106062') }}" rel="stylesheet">
+    <link href="{{ asset('public/dist/css/tabler-payments.min.css?1684106062') }}" rel="stylesheet">
+    <link href="{{ asset('public/dist/css/tabler-vendors.min.css?1684106062') }}" rel="stylesheet">
+    <link href="{{ asset('public/dist/css/demo.min.css?1684106062') }}" rel="stylesheet">
     <style>
       @import url('https://rsms.me/inter/inter.css');
       :root {
@@ -38,7 +38,7 @@
     </style>
 </head>
 <body>
-    <script src="{{ asset('/dist/js/demo-theme.min.js?1684106062') }}" defer></script>
+    <script src="{{ asset('public/dist/js/demo-theme.min.js?1684106062') }}" defer></script>
     <div id="app">
         <header class="navbar navbar-expand-md d-print-none" >
         @auth
@@ -67,7 +67,7 @@
                     <!-- profile -->
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                            <img class="avatar" src="{{ asset('image/user.png') }}" />
+                            <img class="avatar" src="{{ asset('public/image/user.png') }}" />
                             <div class="d-none d-xl-block ps-2">
                                 <div>{{ Auth::user()->name }}</div>
                             </div>
