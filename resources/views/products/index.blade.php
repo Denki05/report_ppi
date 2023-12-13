@@ -21,18 +21,6 @@
     @endif
 
     <div class="page-wrapper">
-        {{--<div class="page-header d-print-none">
-          <div class="container-xl">
-            <div class="row g-2 align-items-center">
-              <div class="col">
-                <h2 class="page-title">
-                  #Product Pack
-                </h2>
-              </div>
-            </div>
-          </div>
-        </div>--}}
-
         <div class="page-body">
           <div class="container-xl">
             <form class="card">
@@ -101,38 +89,6 @@
                   {{--<button type="submit" id="filter" class="btn btn-primary">Search</button>--}}
               </div>
             </form>
-
-              {{--<div class="card">
-                <div class="card-body">
-                  
-                    <table id="datatable" class="table table-striped">
-                      <thead>
-                        <tr>
-                          <td>#</td>
-                          <td>Tgl Nota</td>
-                          <td>No. Nota</td>
-                          <td>Product</td>
-                          <td>Packaging</td>
-                          <td>Customer</td>
-                          <td>Qty</td>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach($model as $row)
-                          <tr>
-                            <th>{{ $loop->iteration }}</th>
-                            <th>{{ date('d-m-Y', strtotime($row->tanggalNota)) }}</th>
-                            <th>{{ $row->nota }}</th>
-                            <th>{{ $row->product }}</th>
-                            <th>{{ $row->packaging }}</th>
-                            <th>{{ $row->customer }}</th>
-                            <th>{{ $row->qty }}</th>
-                          </tr>
-                        @endforeach
-                      </tbody>
-                    </table>
-                </div>
-              </div>--}}
         </div>
     </div>
 
@@ -225,7 +181,7 @@
         
         $.ajax({
            type:'POST',
-           url:"{{ route('products.product_summary') }}",
+           url:"{{ route('products.print_report_product') }}",
            data:{"_token": "{{ csrf_token() }}","product":product, "start":start, "end":end, "typeReport":typeReport},
            success:function(response){
 

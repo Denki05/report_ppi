@@ -165,96 +165,90 @@ class ProductController extends Controller
                         ->with('success','Product deleted successfully');
     }
 
-    public function product_summary(Request $request)
-    {   
-            $product = $request->all()['product'];
-            $start = $request->all()['start'];
-            $end = $request->all()['end'];
-            $type = $request->all()['typeReport'];
-            $date = date("Y-m");
+    public function print_report_product(Request $request)
+    {
+        $product = $request->all()['product'];
+        $start = $request->all()['start'];
+        $end = $request->all()['end'];
+        $type = $request->all()['typeReport'];
+        $date = date("Y-m");
 
-            $sqlStyle = "";
-            $i = 1;
-            foreach ($product as $key => $value) {
-                if ($i == 1){
-                    $sqlStyle .= "";
-                }else{
-                    $sqlStyle .= "OR";
-                }
+        if($type == 1){
+            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\product\\penjualan_product_summary_short_qty.rpt";
+        }elseif($type == 2){
+            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\product\\penjualan_product_summary_short_variant.rpt";
+        }elseif($type == 3){
+            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\product\\penjualan_product_summary.rpt";
+        }elseif($type == 4){
+            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\product\\penjualan_product_detail.rpt";
+        }
+
+        $my_pdf = "C:\\xampp\\htdocs\\report_ppi\public\\report\\product\\export\\product-report-'$date'.pdf";
+
+        $sqlStyle = "";
+        $i = 1;
+        foreach ($product as $key => $value) {
+            if ($i == 1){
+                $sqlStyle .= "";
+            }else{
+                $sqlStyle .= "OR";
+            }
         
-                if(is_array($value)) {
-                     $sec = array();
-                     foreach($value as $second_level) {
-                         $sec[] .=  "{tbl_product.product_name}='$second_level'";
-                     }
-                     $sqlStyle .= implode('AND', $sec);
+            if(is_array($value)) {
+                $sec = array();
+                foreach($value as $second_level) {
+                    $sec[] .=  "{tbl_product.product_name}='$second_level'";
+                }
+                    $sqlStyle .= implode('AND', $sec);
                 }else {
                     $sqlStyle .=  "{tbl_product.product_name}='$value'";
                 }
-                $i++;
+            $i++;
+            // dd($sqlStyle);
+        }
 
-                // dd($sqlStyle);
-            }
+        //- Variables - Server Information 
+        $my_server = "SERVER"; 
+        $my_user = "dev_denki"; 
+        $my_password = "Denki@05121996"; 
+        $my_database = "ppi";
+        $COM_Object = "CrystalDesignRunTime.Application";
 
-            // CR
-            if($type == 1){
-                $my_report = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\product\\penjualan_product_summary_short_qty.rpt";
-            }elseif($type == 2){
-                $my_report = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\product\\penjualan_product_summary_short_variant.rpt";
-            }elseif($type == 3){
-                $my_report = "C:\\xampp\\htdocs\\report_ppi\\\public\\report\\product\\penjualan_product_summary.rpt";
-            }elseif($type == 4){
-                $my_report = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\product\\penjualan_product_detail.rpt";
-            }
+        //-Create new COM object-depends on your Crystal Report version
+        $crapp= New COM($COM_Object) or die("Unable to Create Object");
+        $creport = $crapp->OpenReport($my_report,1); // call rpt report
 
+        //- Set database logon info - must have
+        $creport->Database->Tables(1)->SetLogOnInfo($my_server, $my_database, $my_user, $my_password);
 
-            
-            $my_pdf = 'C:\\xampp\\htdocs\\report_ppi\\public\\report\\product\\export\\product-sales-summary-'.$date.'.pdf';
+        //- field prompt or else report will hang - to get through
+        $creport->EnableParameterPrompting = FALSE;
 
-            //- Variables - Server Information 
-            $my_server = "SERVER"; 
-            $my_user = "dev_denki"; 
-            $my_password = "Denki@05121996"; 
-            $my_database = "ppi";
-            $COM_Object = "CrystalDesignRunTime.Application";
+        // pass parameter record selection formula
+        $sqlString = $sqlStyle;
+        $creport->RecordSelectionFormula = "{tbl_sales_invoice.invoice_date}>=#$start#AND{tbl_sales_invoice.invoice_date}<=#$end#AND($sqlString)";
+        
+        //export to PDF process
+        $creport->ExportOptions->DiskFileName=$my_pdf; //export to pdf
+        $creport->ExportOptions->PDFExportAllPages=true;
+        $creport->ExportOptions->DestinationType=1; // export to file
+        $creport->ExportOptions->FormatType=31; // PDF type
+        $creport->Export(false);
 
+        //------ Release the variables ------
+        $creport = null;
+        $crapp = null;
+        $ObjectFactory = null;
 
-            //-Create new COM object-depends on your Crystal Report version
-            $crapp= New COM($COM_Object) or die("Unable to Create Object");
-            $creport = $crapp->OpenReport($my_report,1); // call rpt report
+        $file = "C:\\xampp\\htdocs\\report_ppi\public\\report\\product\\export\\product-report-'$date'.pdf";
 
-            //- Set database logon info - must have
-            $creport->Database->Tables(1)->SetLogOnInfo($my_server, $my_database, $my_user, $my_password);
-
-            //- field prompt or else report will hang - to get through
-            $creport->EnableParameterPrompting = FALSE;
-            // $creport->FormulaSyntax = 0;
-
-            // loop params for product multipel select
-            $sqlString = $sqlStyle;
-            $creport->RecordSelectionFormula = "{tbl_sales_invoice.invoice_date}>=#$start#AND{tbl_sales_invoice.invoice_date}<=#$end#AND($sqlString)";
-
-            //export to PDF process
-            $creport->ExportOptions->DiskFileName=$my_pdf; //export to pdf
-            $creport->ExportOptions->PDFExportAllPages=true;
-            $creport->ExportOptions->DestinationType=1; // export to file
-            $creport->ExportOptions->FormatType=31; // PDF type
-            $creport->Export(false);
-
-            //------ Release the variables ------
-            $creport = null;
-            $crapp = null;
-            $ObjectFactory = null;
-
-            $file = 'C:\\xampp\\htdocs\\report_ppi\\public\\report\\product\\export\\product-sales-summary-'.$date.'.pdf';
-
-            header("Content-Description: File Transfer"); 
-            header("Content-Type: application/octet-stream"); 
-            header("Content-Transfer-Encoding: Binary"); 
-            header("Content-Disposition: attachment; filename=\"". basename($file) ."\""); 
-            ob_clean();
-            flush();
-            readfile ($file);
-            exit();
+        header("Content-Description: File Transfer"); 
+        header("Content-Type: application/octet-stream"); 
+        header("Content-Transfer-Encoding: Binary"); 
+        header("Content-Disposition: attachment; filename=\"". basename($file) ."\""); 
+        ob_clean();
+        flush();
+        readfile ($file);
+        exit();
     }
 }

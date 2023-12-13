@@ -25,13 +25,13 @@ Route::group(['middleware' => ['auth']], function() {
 
     // product
     Route::group(['as' => 'products.', 'prefix' => '/products'], function () {
-        Route::post('/product_summary', 'ProductController@product_summary')->name('product_summary');
+        Route::post('/print_report_product', 'ProductController@print_report_product')->name('print_report_product');
     });
     Route::resource('products', 'ProductController');
 
     // salesman
     Route::group(['as' => 'salesman.', 'prefix' => '/salesman'], function () {
-        // Route::post('/print_report_principal', 'PrincipalController@print_report_principal')->name('print_report_principal');
+        
     });
     Route::resource('salesman', 'SalesmanController');
 
