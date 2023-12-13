@@ -25,7 +25,6 @@ Route::group(['middleware' => ['auth']], function() {
 
     // product
     Route::group(['as' => 'products.', 'prefix' => '/products'], function () {
-        Route::get('/json', 'ProductController@json')->name('json');
         Route::post('/product_summary', 'ProductController@product_summary')->name('product_summary');
     });
     Route::resource('products', 'ProductController');
