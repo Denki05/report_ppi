@@ -31,18 +31,22 @@ class PrincipalController extends Controller
         $type = $request->all()['type'];
         $date = date("Y-m");
 
+        // Convert date
+        $new_date_start = date('d-m-Y', strtotime($start));
+        $new_date_end = date('d-m-Y', strtotime($end));
+
         if($type == 1){
-            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\principal\\principal_summary.rpt";
+            $my_report = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\principal\\principal_summary.rpt";
         }else{
-            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\principal\\principal_detail.rpt";
+            $my_report = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\principal\\principal_detail.rpt";
         }
         
         $my_pdf = 'C:\\xampp\\htdocs\\report_ppi\\public\\report\\principal\\export\\principal-semester-'.$date.'.pdf';
 
         //- Variables - Server Information 
-        $my_server = "SERVER"; 
-        $my_user = "dev_denki"; 
-        $my_password = "Denki@05121996"; 
+        $my_server = "LOCAL_2"; 
+        $my_user = "root"; 
+        $my_password = ""; 
         $my_database = "ppi";
         $COM_Object = "CrystalDesignRunTime.Application";
 
@@ -55,6 +59,9 @@ class PrincipalController extends Controller
 
         //- field prompt or else report will hang - to get through
         $creport->EnableParameterPrompting = FALSE;
+
+        $creport->ParameterFields(3)->SetCurrentValue ("$new_date_start"); // <-- param 1
+        $creport->ParameterFields(4)->SetCurrentValue ("$new_date_end"); // <-- param 2
 
         // pass parameter record selection formula
         $creport->RecordSelectionFormula = "{tbl_factory.factory_name}='$factory'AND{tbl_sales_invoice.invoice_date}>=#$start#AND{tbl_sales_invoice.invoice_date}<=#$end#";

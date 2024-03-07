@@ -49,7 +49,9 @@ Route::group(['middleware' => ['auth']], function() {
 
     // Data Transform
     Route::group(['as' => 'data_transform.', 'prefix' => '/data_transform'], function () {
-        // Route::post('/print_report_principal', 'PrincipalController@print_report_principal')->name('print_report_principal');
+        Route::get('/store', 'DataTransformController@print_report')->name('print_report');
+        Route::get('/postData', 'DataTransformController@postData')->name('postData');
+        Route::get('/resetData', 'DataTransformController@resetData')->name('resetData');
     });
     Route::resource('data_transform', 'DataTransformController');
 });

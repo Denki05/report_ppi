@@ -29,6 +29,10 @@ class CustomerController extends Controller
         $type = $request->all()['type'];
         $date = date("Y-m");
 
+        // Convert date
+        $new_date_start = date('d-m-Y', strtotime($start));
+        $new_date_end = date('d-m-Y', strtotime($end));
+
             $sqlStyle = "";
             $i = 1;
             foreach ($customer as $key => $value) {
@@ -63,9 +67,9 @@ class CustomerController extends Controller
         $my_pdf = 'C:\\xampp\\htdocs\\report_ppi\\public\\report\\customer\\export\\customer-report-order-'.$date.'.pdf';
 
         //- Variables - Server Information 
-        $my_server = "SERVER"; 
-        $my_user = "dev_denki"; 
-        $my_password = "Denki@05121996"; 
+        $my_server = "LOCAL_2"; 
+        $my_user = "root"; 
+        $my_password = ""; 
         $my_database = "ppi";
         $COM_Object = "CrystalDesignRunTime.Application";
 
@@ -78,10 +82,13 @@ class CustomerController extends Controller
  
          //- field prompt or else report will hang - to get through
          $creport->EnableParameterPrompting = FALSE;
+
+         $creport->ParameterFields(3)->SetCurrentValue ("$new_date_start"); // <-- param 1
+         $creport->ParameterFields(4)->SetCurrentValue ("$new_date_end"); // <-- param 2
  
          // pass parameter record selection formula
          $sqlString = $sqlStyle;
-         $creport->RecordSelectionFormula = "{tbl_sales_invoice.invoice_date}>=#$start#AND{tbl_sales_invoice.invoice_date}<=#$end#AND($sqlString)";
+         $creport->RecordSelectionFormula = "($sqlString)AND{tbl_sales_invoice.invoice_date}>=#$start#AND{tbl_sales_invoice.invoice_date}<=#$end#";
  
          //export to PDF process
          $creport->ExportOptions->DiskFileName=$my_pdf; //export to pdf

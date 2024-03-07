@@ -173,17 +173,24 @@ class ProductController extends Controller
         $type = $request->all()['typeReport'];
         $date = date("Y-m");
 
+        // Convert date
+        $new_date_start = date('d-m-Y', strtotime($start));
+        $new_date_end = date('d-m-Y', strtotime($end));
+
+        
+
         if($type == 1){
             $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\product\\penjualan_product_summary_short_qty.rpt";
         }elseif($type == 2){
-            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\product\\penjualan_product_summary_short_variant.rpt";
+            // DD($my_report);
+            $my_report = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\product\\penjualan_product_summary_short_variant.rpt";
         }elseif($type == 3){
-            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\product\\penjualan_product_summary.rpt";
+            $my_report = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\product\\penjualan_product_summary.rpt";
         }elseif($type == 4){
-            $my_report = "C:\\xampp\\htdocs\\report_ppi\public\\report\\product\\penjualan_product_detail.rpt";
+            $my_report = "C:\\xampp\\htdocs\\report_ppi\\public\\report\\product\\penjualan_product_detail.rpt";
         }
 
-        $my_pdf = "C:\\xampp\\htdocs\\report_ppi\public\\report\\product\\export\\product-report-'$date'.pdf";
+        $my_pdf = 'C:\\xampp\\htdocs\\report_ppi\\public\\report\\product\\export\\product-report-'.$date.'.pdf';
 
         $sqlStyle = "";
         $i = 1;
@@ -208,9 +215,9 @@ class ProductController extends Controller
         }
 
         //- Variables - Server Information 
-        $my_server = "SERVER"; 
-        $my_user = "dev_denki"; 
-        $my_password = "Denki@05121996"; 
+        $my_server = "LOCAL_2"; 
+        $my_user = "root"; 
+        $my_password = ""; 
         $my_database = "ppi";
         $COM_Object = "CrystalDesignRunTime.Application";
 
@@ -220,14 +227,18 @@ class ProductController extends Controller
 
         //- Set database logon info - must have
         $creport->Database->Tables(1)->SetLogOnInfo($my_server, $my_database, $my_user, $my_password);
+        // DD($creport);
 
         //- field prompt or else report will hang - to get through
         $creport->EnableParameterPrompting = FALSE;
 
+        $creport->ParameterFields(3)->SetCurrentValue ("$new_date_start"); // <-- param 1
+        $creport->ParameterFields(4)->SetCurrentValue ("$new_date_end"); // <-- param 2
+
         // pass parameter record selection formula
         $sqlString = $sqlStyle;
-        $creport->RecordSelectionFormula = "{tbl_sales_invoice.invoice_date}>=#$start#AND{tbl_sales_invoice.invoice_date}<=#$end#AND($sqlString)";
-        
+        $creport->RecordSelectionFormula = "($sqlString)AND{tbl_sales_invoice.invoice_date}>=#$start#AND{tbl_sales_invoice.invoice_date}<=#$end#";
+        // DD($creport->RecordSelectionFormula);
         //export to PDF process
         $creport->ExportOptions->DiskFileName=$my_pdf; //export to pdf
         $creport->ExportOptions->PDFExportAllPages=true;
@@ -240,12 +251,14 @@ class ProductController extends Controller
         $crapp = null;
         $ObjectFactory = null;
 
-        $file = "C:\\xampp\\htdocs\\report_ppi\public\\report\\product\\export\\product-report-'$date'.pdf";
+        $file = 'C:\\xampp\\htdocs\\report_ppi\\public\\report\\product\\export\\product-report-'.$date.'.pdf';
+
+        
 
         header("Content-Description: File Transfer"); 
-        header("Content-Type: application/octet-stream"); 
+        header("Content-Type: application/octet-stream");
         header("Content-Transfer-Encoding: Binary"); 
-        header("Content-Disposition: attachment; filename=\"". basename($file) ."\""); 
+        header("Content-Disposition: attachment; filename=$file"); 
         ob_clean();
         flush();
         readfile ($file);

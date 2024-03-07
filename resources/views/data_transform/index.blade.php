@@ -4,13 +4,16 @@
 
 @section('content')
     @if ($message = Session::get('success'))
-        <div class="alert alert-success">
+        <!-- <div class="alert alert-success">
             <p>{{ $message }}</p>
+        </div> -->
+        <div class="alert alert-success" role="alert">
+            {{ $message }}
         </div>
     @endif
 
     @if ($errors->any())
-        <div class="alert alert-danger">
+        <div class="alert alert-danger" role="alert">
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
             <ul>
                 @foreach ($errors->all() as $error)
@@ -27,8 +30,11 @@
             <div class="row g-2 align-items-center">
               <div class="col">
                 <div class="btn-list">
-                  <a href="#" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modal-report">
-                    POST DATA
+                  <a href="{{ route('data_transform.postData') }}" class="btn btn-info">
+                    Sync data
+                  </a>
+                  <a href="{{ route('data_transform.resetData') }}" class="btn btn-danger">
+                    Reset data
                   </a>
                 </div>
               </div>
@@ -38,10 +44,24 @@
         <!-- Page body -->
         <div class="page-body">
           <div class="container-xl">
-            <form class="card">
+            <form class="card" action="{{ route('data_transform.print_report') }}" method="get">
                 @csrf
-                <div class="card-header">
+                <!-- <div class="card-header">
                     <h3 class="card-title">Report Register Brand :</h3>
+                    
+                </div> -->
+               <?php
+                    $start = DB::table('tbl_data_sync2')->orderBy('invoice_date', 'ASC')->first();
+                    $end = DB::table('tbl_data_sync2')->orderBy('invoice_date', 'DESC')->first();
+               ?>
+                <div class="card-header container-fluid">
+                    <div class="col-md-8">
+                        <h3 class="w-75 p-3">Report Register Brand :</h3>
+                    </div>
+                    <div class="col-md-4 float-right">
+                    <h3 class="w-100 p-3">Last Update Data : 
+                       
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="mb-3 row">
@@ -49,7 +69,7 @@
                         <div class="col">
                             <div class="input-icon">
                                 <span class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M11 15h1" /><path d="M12 15v3" /></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M11 15h1" /><path d="M12 15v3" /></svg>
                                 </span>
                                 <input class="form-control" placeholder="Select a Start date" id="start_date" name="start_date"/>
                                 <input type="hidden" class="form-control" id="startDate">
@@ -82,7 +102,8 @@
                         <h5 class="modal-title">POST DATA</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="#" method="post">
+                    <form action="{{ route('data_transform.store') }}" method="post">
+                    @csrf
                     <div class="modal-body">
                         <div class="mb-3 row">
                             <label class="col-3 col-form-label required">Range Date :</label>
@@ -91,7 +112,7 @@
                                     <span class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M11 15h1" /><path d="M12 15v3" /></svg>
                                     </span>
-                                    <input class="form-control" placeholder="Select a Start date" id="transform_start" name="start_date"/>
+                                    <input class="form-control" placeholder="Select a Start date" id="transform_start" name="transform_start"/>
                                 </div>
                             </div>
                             <div class="col">
@@ -99,7 +120,7 @@
                                     <span class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M11 15h1" /><path d="M12 15v3" /></svg>
                                     </span>
-                                    <input class="form-control" placeholder="Select a End date" id="transform_end" name="end_date"/>
+                                    <input class="form-control" placeholder="Select a End date" id="transform_end" name="transform_end"/>
                                 </div>
                             </div>
                         </div>
@@ -108,11 +129,20 @@
                         <a href="#" class="btn btn-danger" data-bs-dismiss="modal">
                             Cancel
                         </a>
-                        <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                        {{--<a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
                         <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
                             Create new report
-                        </a>
+                        </a>--}}
+                        <button type="submit" class="btn btn-primary ms-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-database" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M12 6m-8 0a8 3 0 1 0 16 0a8 3 0 1 0 -16 0" />
+                            <path d="M4 6v6a8 3 0 0 0 16 0v-6" />
+                            <path d="M4 12v6a8 3 0 0 0 16 0v-6" />
+                        </svg>
+                            POST
+                        </button>
                     </div>
                     </form>
                 </div>
